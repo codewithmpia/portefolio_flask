@@ -1,0 +1,31 @@
+{% extends "partials/base.html" %}
+{% from "partials/macro.html" import render_head_content, render_messages %}
+
+{% block title %}
+    Page introuvable | Codewithmpia
+{% endblock title %}
+
+{% block head_content %}
+    {{ render_head_content(
+        title="Page introuvable",
+        note="Pas d'inquiétude, veuillez vérifier l'url puis réessayer."
+    )}}
+{% endblock head_content %}
+
+
+{% block contents %}
+    <section class="w-full">
+        {{ render_messages(dismissible=true) }}
+        <h3 class="text-xl text-cyan-600 font-bold mb-6">Voici mes 4 derniers projets: </h3>
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for project in projects %}
+                <a href="{{ project.get_absolute_url }}" class="relative rounded-md shadow-md group">
+                    <img class="h-full w-full object-cover rounded-md" src="/{{ project.image }}" alt="project.title">
+                    <div class="absolute inset-x-0 bottom-0 flex items-center justify-center bg-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity rounded-b-md">
+                        <span class="text-white text-sm p-2">{{ project.title|truncate(15) }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock contents %}

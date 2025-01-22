@@ -1,0 +1,72 @@
+{% macro render_head_content(title, note, date, link, is_show=false) %}
+    <section class="w-full">
+        <div class="w-full flex flex-col gap-3">
+            {% if request.endpoint != "index" %}
+                <a href="{{ url_for('index') }}" class="flex items-center gap-1 hover:text-cyan-600 underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 8L2 12L6 16"/>
+                        <path d="M2 12H22"/>
+                    </svg>
+                    <span>Retour</span>
+                </a>
+            {% endif %}
+            <h1 class="flex items-baseline gap-1 text-4xl font-black text-cyan-600">
+                {{ title }}
+                <span class="block w-3 h-3 bg-orange-400"></span>
+            </h1>
+            {% if is_show %}
+                <div class="flex items-center gap-6 text-sm uppercase">
+                    <span>{{ date }}</span>
+                    <a href="{{ link }}" target="_blank" class="hover:text-cyan-600 underline">Voir sur Github</a>
+                </div>
+            {% else %}
+                <p>{{ note }}</p>
+            {% endif %}
+        </div>
+    </section>
+{% endmacro %}
+
+{% macro link_buton(url, text) %}
+    <a href="{{ url_for(url) }}" class="w-56 md:w-full lg:w-full flex items-center justify-between gap-1 bg-cyan-600 text-white font-medium py-2 px-3 rounded shadow-sm cursor-pointer hover:filter hover:brightness-110">
+        {{ text }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8L22 12L18 16"/>
+            <path d="M2 12H22"/>
+        </svg>
+    </a>
+{% endmacro %}
+
+{% macro render_messages(dismissible=false) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert relative w-full flex items-center justify-between p-3 rounded mb-6 border border-solid
+                {% if category == 'success' %} 
+                    border-green-200 bg-green-50 text-green-900 
+                {% elif category == 'info' or category == 'message' %}
+                    border-blue-200 bg-blue-50 text-blue-900
+                {% elif category == 'warning' %}
+                    border-yellow-200 bg-yellow-50 text-yellow-900
+                {% else %}
+                    border-red-200 bg-red-50 text-red-900
+                {% endif %}">
+                    <strong>{{ message }}</strong>
+                    {% if dismissible %}
+                        <svg class="close-alert-btn cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"/>
+                            <path d="m6 6 12 12"/>
+                        </svg>
+                    {% endif %}
+
+                    <script>
+                        document.querySelectorAll(".close-alert-btn").forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                btn.parentElement.remove();
+                            });
+                        });
+                    </script>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmacro %}

@@ -1,0 +1,63 @@
+{% extends "partials/base.html" %}
+{% from "partials/macro.html" import render_head_content, render_messages, link_buton %}
+
+{% block title %}
+    Accueil | Codewithmpia
+{% endblock title %}
+
+{% block head_content %}
+    {{ render_head_content(
+        title="Projets",
+        note="Voici la liste des projets que j'ai réalisé ou auxquels j'ai participé."
+    )}}
+{% endblock head_content %}
+
+{% block contents %}
+    <section class="w-full">
+        {{ render_messages(dismissible=true) }}
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for project in projects %}
+                <a href="{{ project.get_absolute_url }}" class="relative rounded-md shadow-md group">
+                    <img class="h-full w-full object-cover rounded-md" src="{{ project.image }}" alt="project.title">
+                    <div class="absolute inset-x-0 bottom-0 flex items-center justify-center bg-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity rounded-b-md">
+                        <span class="text-white text-sm p-2">{{ project.title|truncate(15) }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="w-full flex flex-col gap-10 mt-10">
+            {{ render_head_content(
+                title="Compétences",
+                note="Découvrez les compétences que j'ai acquises et perfectionnées au fil de mes projets, 
+                combinant expertise technique et créativité pour relever tous les défis."
+            )}}
+
+            <section class="w-full">
+                <div class="w-full flex flex-col gap-8">
+                    <div class="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6 bg-gray-50 p-6 rounded">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/python.svg') }}" alt="Logo Python">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/django.svg') }}" alt="Logo Django">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/flask.svg') }}" alt="Logo Flask">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/C.svg') }}" alt="Logo C">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/sql.svg') }}" alt="Logo SQL">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/javascript.svg') }}" alt="Logo JS">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/vue.svg') }}" alt="Logo VueJS">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/alpine.svg') }}" alt="Logo AlpineJS">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/html.svg') }}" alt="Logo HTML">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/css.svg') }}" alt="Logo CSS">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/tailwindcss.svg') }}" alt="Logo Tailwindcss">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/bootstrap.svg') }}" alt="Logo Bootstrap">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/linux.svg') }}" alt="Logo Linux">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/docker.svg') }}" alt="Logo Docker">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/git.svg') }}" alt="Logo Git">
+                        <img class="w-full h-16" src="{{ url_for('static', filename='images/icons/latex.svg') }}" alt="Logo Latex">
+                    </div>
+                    <div class="self-start">
+                        {{ link_buton("download", "Télecharger mon CV") }}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock contents %}

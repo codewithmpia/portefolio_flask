@@ -1,0 +1,37 @@
+{% extends "partials/base.html" %}
+{% from "partials/macro.html" import render_head_content, render_messages %}
+
+{% block title %}
+    {{ project.title }} | Codewithmpia
+{% endblock title %}
+
+{% block head_content %}
+    {{ render_head_content(
+        title=project.title,
+        date=project.created_at.strftime("%d/%m/%Y"),
+        link=project.link,
+        is_show=true 
+    )}}
+{% endblock head_content %}
+
+
+{% block contents %}
+    <section class="w-full">
+        {{ render_messages(dismissible=true) }}
+        <div class="w-full flex flex-col gap-6">
+            <div class="w-full h-72 rounded-md shadow-md">
+                <img class="w-full h-72 object-cover rounded-md" src="/{{ project.image }}" alt="{{ project.title }}">
+            </div>
+            <div>{{ project.description|md|safe }}</div>
+            <div class="self-start">
+                <a href="{{ project.link }}" target="_blank" class="w-56 md:w-full lg:w-full flex items-center justify-between gap-1 bg-cyan-600 text-white font-medium py-2 px-3 rounded shadow-sm cursor-pointer hover:filter hover:brightness-110">
+                    Voir sur Github
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8L22 12L18 16"/>
+                        <path d="M2 12H22"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock contents %}

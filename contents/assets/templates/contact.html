@@ -1,0 +1,36 @@
+{% extends "partials/base.html" %}
+{% from "partials/macro.html" import render_head_content, render_messages %}
+
+{% block title %}
+    Contact | Codewithmpia
+{% endblock title %}
+
+{% block head_content %}
+    {{ render_head_content(
+        title="Me contacter",
+        note="Des questions? Laissez-moi un message et je vous répondrai dans les plus brefs délais."
+    )}}
+{% endblock head_content %}
+
+
+{% block contents %}
+    <section class="w-full">
+        {{ render_messages(dismissible=true) }}
+        <form action="{{ url_for('contact') }}" method="POST" class="w-full">
+            {{ form.csrf_token() }}
+            <div class="w-full mb-3">
+                {{ form.name.label(class="block font-medium uppercase mb-1.5") }}
+                {{ form.name(class="w-full min-h-12 outline-none border border-solid border-[#d5e3ec] rounded p-3 focus:border-cyan-600 focus:shadow-[0_0_0_3px_#4869ee3f]") }}
+            </div>
+            <div class="w-full mb-3">
+                {{ form.email.label(class="block font-medium uppercase mb-1.5") }}
+                {{ form.email(class="w-full min-h-12 outline-none border border-solid border-[#d5e3ec] rounded p-3 focus:border-cyan-600 focus:shadow-[0_0_0_3px_#4869ee3f]") }}
+            </div>
+            <div class="w-full mb-3">
+                {{ form.message.label(class="block font-medium uppercase mb-1.5") }}
+                {{ form.message(class="w-full min-h-12 h-52 resize-none outline-none border border-solid border-[#d5e3ec] rounded p-3 focus:border-cyan-600 focus:shadow-[0_0_0_3px_#4869ee3f]") }}
+            </div>
+            {{ form.submit(class="bg-cyan-600 text-white font-medium py-2 px-3 rounded shadow-sm cursor-pointer hover:filter hover:brightness-110") }}
+        </form>
+    </section>
+{% endblock contents %}
