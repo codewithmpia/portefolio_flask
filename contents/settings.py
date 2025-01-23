@@ -2,6 +2,7 @@ from flask import Flask, g, flash, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_login import LoginManager, current_user
+from flask_vite import Vite
 
 from . import utils
 
@@ -21,13 +22,16 @@ app.config["SQLALCHEMY_DATABASE_URI"] = utils.get_env_vars(
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+# Vite configuration
+app.config["VITE_AUTO_INSERT"] = True
+vite = Vite(app)
+
 # Template filters
 app.add_template_filter(utils.format_markdown, "md")
 
 from .models import User, Project, Contact
 from .admin import CustomAdminIndexView, ProjectAdminView, ContactAdminView
 from .views import IndexView, ProjectView, ContactView, DownloadCVView, LoginView, LogoutView
-
 
 # Error handlers
 @app.errorhandler(404)

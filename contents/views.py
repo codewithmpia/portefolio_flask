@@ -119,3 +119,4 @@ class LogoutView(MethodView):
         logout_user()
         flash("Vous êtes déconnecté.", "info")
         return redirect(url_for("index"))
+    
